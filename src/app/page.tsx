@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { MediaCard } from "@/components/ui/MediaCard";
 import { getCurrentUser } from "@/lib/supabase/user";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export default async function Home() {
@@ -10,9 +11,15 @@ export default async function Home() {
   return (
     <main className="p-6 flex flex-col gap-6">
       {user ? (
-        <Link href="/profile" className="block">
-          <div className="text-dim text-sm">Good to see you</div>
-          <h1 className="font-serif text-2xl">{user.fullName}</h1>
+        <Link
+          href="/profile"
+          className="flex items-center justify-between bg-card border border-line rounded-2xl px-4 py-3"
+        >
+          <div>
+            <div className="text-dim text-sm">Good to see you</div>
+            <h1 className="font-serif text-2xl">{user.fullName}</h1>
+          </div>
+          <ChevronRight size={20} className="text-dim" />
         </Link>
       ) : (
         <>

@@ -1,8 +1,8 @@
-import { getCurrentUser } from "@/lib/supabase/user";
+import { requireUser } from "@/lib/supabase/user";
 import { updateProfile } from "@/app/(auth)/actions";
 import { LogoutButton } from "@/components/ui/LogoutButton";
 import { Button } from "@/components/ui/Button";
-import { redirect } from "next/navigation";
+import { BackButton } from "@/components/ui/BackButton";
 
 export default async function ProfilePage({
   searchParams,
@@ -10,15 +10,13 @@ export default async function ProfilePage({
   searchParams: Promise<{ error?: string; success?: string }>;
 }) {
   const { error, success } = await searchParams;
-  const user = await getCurrentUser();
-
-  if (!user) {
-    redirect("/login");
-  }
+  const user = await requireUser();
 
   return (
     <main className="p-6 flex flex-col gap-6 max-w-sm mx-auto">
-      <div className="flex flex-col items-center gap-3 pt-4">
+      <BackButton />
+
+      <div className="flex flex-col items-center gap-3 pt-2">
         <div className="w-20 h-20 rounded-full bg-card2" />
         <h1 className="font-serif text-2xl">{user.fullName}</h1>
         <p className="text-dim text-sm">{user.email}</p>
