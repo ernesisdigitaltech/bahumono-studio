@@ -82,3 +82,29 @@ export async function resetPassword(formData: FormData) {
 
   redirect("/login?message=Password updated. Please log in.");
 }
+
+export async function updateProfile(formData: FormData) {
+  const fullName = formData.get("fullName") as string;
+  const whatsapp = formData.get("whatsapp") as string;
+
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const { error } = await supabase
+    .from("profiles")
+    .update({ full_name: fullName, whatsapp_number: whatsapp })
+    .eq("id", user.id);
+
+  if (error) {
+    redirect(`/profile?error=${encodeURIComponent(error.message)}`);
+  }
+
+  redirect("/profile?success=Profile updated");
+}
