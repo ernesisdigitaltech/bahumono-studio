@@ -27,3 +27,43 @@ export async function createArtist(formData: FormData) {
   revalidatePath("/admin/artists");
   redirect("/admin/artists?success=Artist created");
 }
+
+export async function updateArtist(formData: FormData) {
+  await requireAdmin();
+
+  const id = formData.get("id") as string;
+  const name = formData.get("name") as string;
+  const bio = formData.get("bio") as string;
+  const photoUrl = formData.get("photoUrl") as string;
+
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("artists")
+    .update({ name, bio: bio || null, photo_url: photoUrl || null })
+    .eq("id", id);
+
+  if (error) {
+    redirect(`/admin/artists/${id}?error=${encodeURIComponent(error.message)}`);
+  }
+
+  revalidatePath("/admin/artists");
+  revalidatePath(`/admin/artists/${id}`);
+  redirect(`/admin/artists/${id}?success=Artist updated`);
+}
+
+export async function deleteArtist(formData: FormData) {
+  await requireAdmin();
+
+  const id = formData.get("id") as string;
+  const supabase = await createClient();
+
+  const { error } = await supabase.from("artists").delete().eq("id", id);
+
+  if (error) {
+    redirect(`/admin/artists/${id}?error=${encodeURIComponent(error.message)}`);
+  }
+
+  revalidatePath("/admin/artists");
+  redirect("/admin/artists?success=Artist deleted");
+}
