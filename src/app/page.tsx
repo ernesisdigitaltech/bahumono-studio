@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { MediaCard } from "@/components/ui/MediaCard";
+import { LogoutButton } from "@/components/ui/LogoutButton";
 
 export default function Home() {
   return (
