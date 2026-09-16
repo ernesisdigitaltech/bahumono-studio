@@ -9,11 +9,15 @@ export async function getCurrentUser() {
 
   if (!user) return null;
 
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("id, full_name, whatsapp_number, avatar_url")
     .eq("id", user.id)
     .single();
+
+  console.log("DEBUG user.id:", user.id);
+  console.log("DEBUG profile:", profile);
+  console.log("DEBUG profileError:", profileError);
 
   const { data: roleRow } = await supabase
     .from("user_roles")
