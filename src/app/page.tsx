@@ -36,6 +36,8 @@ export default function Home() {
           <MediaCard title="Long Drive Mix" artist="Studio Selects" />
         </div>
       </div>
+
+      <LogoutButton />
     </main>
   );
 }
