@@ -10,10 +10,10 @@ export default async function Home() {
   return (
     <main className="p-6 flex flex-col gap-6">
       {user ? (
-        <div>
+        <Link href="/profile" className="block">
           <div className="text-dim text-sm">Good to see you</div>
           <h1 className="font-serif text-2xl">{user.fullName}</h1>
-        </div>
+        </Link>
       ) : (
         <>
           <h1 className="font-serif text-3xl">Bahumono Studio</h1>
