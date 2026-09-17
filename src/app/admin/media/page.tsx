@@ -45,8 +45,9 @@ export default async function AdminMediaPage({
       ) : (
         <div className="flex flex-col gap-3">
           {media.map((item) => (
-            <div
+            <Link
               key={item.id}
+              href={`/admin/media/${item.id}`}
               className="flex items-center gap-3 bg-card border border-line rounded-xl px-4 py-3"
             >
               <Cover
@@ -71,7 +72,7 @@ export default async function AdminMediaPage({
               >
                 {item.status}
               </span>
-            </div>
+            </Link>
           ))}
         </div>
       )}

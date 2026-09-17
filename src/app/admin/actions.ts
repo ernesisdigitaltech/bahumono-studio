@@ -105,3 +105,57 @@ export async function createMedia(formData: FormData) {
   revalidatePath("/admin/media");
   redirect("/admin/media?success=Media uploaded");
 }
+
+export async function updateMedia(formData: FormData) {
+  await requireAdmin();
+
+  const id = formData.get("id") as string;
+  const title = formData.get("title") as string;
+  const type = formData.get("type") as string;
+  const category = formData.get("category") as string;
+  const artistId = formData.get("artistId") as string;
+  const filePath = formData.get("filePath") as string;
+  const coverPath = formData.get("coverPath") as string;
+  const releaseDate = formData.get("releaseDate") as string;
+  const lyrics = formData.get("lyrics") as string;
+
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("media")
+    .update({
+      title,
+      type,
+      category,
+      artist_id: artistId,
+      file_path: filePath,
+      cover_path: coverPath || null,
+      release_date: releaseDate || null,
+      lyrics: lyrics || null,
+    })
+    .eq("id", id);
+
+  if (error) {
+    redirect(`/admin/media/${id}?error=${encodeURIComponent(error.message)}`);
+  }
+
+  revalidatePath("/admin/media");
+  revalidatePath(`/admin/media/${id}`);
+  redirect(`/admin/media/${id}?success=Media updated`);
+}
+
+export async function deleteMedia(formData: FormData) {
+  await requireAdmin();
+
+  const id = formData.get("id") as string;
+  const supabase = await createClient();
+
+  const { error } = await supabase.from("media").delete().eq("id", id);
+
+  if (error) {
+    redirect(`/admin/media/${id}?error=${encodeURIComponent(error.message)}`);
+  }
+
+  revalidatePath("/admin/media");
+  redirect("/admin/media?success=Media deleted");
+}
