@@ -1,5 +1,5 @@
 import { getMedia } from "@/lib/media";
-import { MediaCard } from "@/components/ui/MediaCard";
+import { LoadMoreMedia } from "@/components/ui/LoadMoreMedia";
 import { Pill } from "@/components/ui/Pill";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { BackButton } from "@/components/ui/BackButton";
@@ -54,16 +54,11 @@ export default async function ExplorePage({
           message="Try a different filter, or check back once more media is uploaded."
         />
       ) : (
-        <div className="grid grid-cols-2 gap-4">
-          {media.map((item) => (
-            <MediaCard
-              key={item.id}
-              title={item.title}
-              artist={(item.artists as unknown as { name: string } | null)?.name ?? "Unknown"}
-              coverSrc={item.cover_path ?? undefined}
-            />
-          ))}
-        </div>
+        <LoadMoreMedia
+          initialItems={media as never}
+          type={params.type}
+          category={params.category}
+        />
       )}
     </main>
   );
