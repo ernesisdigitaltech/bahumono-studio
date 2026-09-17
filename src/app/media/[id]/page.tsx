@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { Cover } from "@/components/ui/Cover";
 import { PlayButton } from "@/components/ui/PlayButton";
+import { ProgressBar } from "@/components/ui/ProgressBar";
+import { VolumeControl } from "@/components/ui/VolumeControl";
 import { BackButton } from "@/components/ui/BackButton";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -36,16 +38,19 @@ export default async function MediaDetailPage({
         className="w-full aspect-square"
       />
 
-      <div className="flex items-center justify-between">
-        <div className="min-w-0">
-          <h1 className="font-serif text-xl truncate">{media.title}</h1>
-          {artist && (
-            <Link href={`/artists/${artist.id}`} className="text-dim text-sm">
-              {artist.name}
-            </Link>
-          )}
-        </div>
+      <div>
+        <h1 className="font-serif text-xl truncate">{media.title}</h1>
+        {artist && (
+          <Link href={`/artists/${artist.id}`} className="text-dim text-sm">
+            {artist.name}
+          </Link>
+        )}
+      </div>
 
+      <ProgressBar />
+
+      <div className="flex items-center justify-between">
+        <VolumeControl />
         <PlayButton
           track={{
             id: media.id,
@@ -56,6 +61,7 @@ export default async function MediaDetailPage({
             type: media.type as "audio" | "video",
           }}
         />
+        <div style={{ width: 76 }} />
       </div>
 
       <div className="text-xs text-dim capitalize">
