@@ -3,6 +3,7 @@ import { Cover } from "@/components/ui/Cover";
 import { BackButton } from "@/components/ui/BackButton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export default async function ArtistPage({
   params,
@@ -54,8 +55,9 @@ export default async function ArtistPage({
         ) : (
           <div className="flex flex-col gap-1">
             {songs.map((song) => (
-              <div
+              <Link
                 key={song.id}
+                href={`/media/${song.id}`}
                 className="flex items-center justify-between py-3 border-b border-line"
               >
                 <div>
@@ -64,7 +66,7 @@ export default async function ArtistPage({
                     {song.category} &middot; {song.type}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
