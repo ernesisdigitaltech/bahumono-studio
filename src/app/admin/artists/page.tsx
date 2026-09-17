@@ -45,19 +45,21 @@ export default async function AdminArtistsPage({
       ) : (
         <div className="flex flex-col gap-3">
           {artists.map((artist) => (
-            <Link
+            <div
               key={artist.id}
-              href={`/admin/artists/${artist.id}`}
               className="flex items-center gap-3 bg-card border border-line rounded-xl px-4 py-3"
             >
               <Cover title={artist.name} src={artist.photo_url ?? undefined} className="w-12 h-12 rounded-full" />
-              <div className="flex-1 min-w-0">
+              <Link href={`/admin/artists/${artist.id}`} className="flex-1 min-w-0">
                 <div className="text-sm font-semibold truncate">{artist.name}</div>
                 {artist.bio && (
                   <div className="text-xs text-dim truncate">{artist.bio}</div>
                 )}
-              </div>
-            </Link>
+              </Link>
+              <Link href={`/artists/${artist.id}`} className="text-xs text-gold flex-shrink-0">
+                View
+              </Link>
+            </div>
           ))}
         </div>
       )}

@@ -2,6 +2,7 @@ import { requireAdmin } from "@/lib/supabase/user";
 import { createArtist } from "@/app/admin/actions";
 import { Button } from "@/components/ui/Button";
 import { BackButton } from "@/components/ui/BackButton";
+import { PhotoUploadField } from "@/components/ui/PhotoUploadField";
 
 export default async function NewArtistPage({
   searchParams,
@@ -41,16 +42,7 @@ export default async function NewArtistPage({
           />
         </div>
 
-        <div>
-          <label className="block text-xs text-dim mb-1.5">
-            Photo URL <span className="text-dim">(temporary — real upload comes later)</span>
-          </label>
-          <input
-            name="photoUrl"
-            placeholder="https://..."
-            className="w-full bg-card border border-line rounded-xl px-4 py-3 text-sm"
-          />
-        </div>
+        <PhotoUploadField name="photoUrl" label="Artist photo" />
 
         <Button type="submit">Create artist</Button>
       </form>

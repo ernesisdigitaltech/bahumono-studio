@@ -4,6 +4,7 @@ import { updateArtist } from "@/app/admin/actions";
 import { Button } from "@/components/ui/Button";
 import { BackButton } from "@/components/ui/BackButton";
 import { DeleteArtistButton } from "@/components/admin/DeleteArtistButton";
+import { PhotoUploadField } from "@/components/ui/PhotoUploadField";
 import { notFound } from "next/navigation";
 
 export default async function EditArtistPage({
@@ -67,14 +68,11 @@ export default async function EditArtistPage({
           />
         </div>
 
-        <div>
-          <label className="block text-xs text-dim mb-1.5">Photo URL</label>
-          <input
-            name="photoUrl"
-            defaultValue={artist.photo_url ?? ""}
-            className="w-full bg-card border border-line rounded-xl px-4 py-3 text-sm"
-          />
-        </div>
+        <PhotoUploadField
+          name="photoUrl"
+          label="Artist photo"
+          defaultValue={artist.photo_url ?? ""}
+        />
 
         <Button type="submit">Save changes</Button>
       </form>
