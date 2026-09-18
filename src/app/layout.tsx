@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import { BottomNav } from "@/components/ui/BottomNav";
+import { MiniPlayer } from "@/components/ui/MiniPlayer";
 import { PlayerProvider } from "@/lib/player/PlayerContext";
 
 const inter = Inter({
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-ink text-text pb-20">
         <PlayerProvider>
           {children}
+          <MiniPlayer />
           <BottomNav />
         </PlayerProvider>
       </body>

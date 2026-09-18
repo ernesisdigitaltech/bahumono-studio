@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useRef, useState, ReactNode } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 export type Track = {
   id: string;
@@ -36,14 +37,16 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
 
   function play(track: Track) {
     if (currentTrack?.id === track.id) {
-      togglePlayPause();
-      return;
+        togglePlayPause();
+        return;
     }
     setCurrentTrack(track);
     setIsPlaying(true);
-    // The actual <audio> element only exists once currentTrack is set,
-    // so we wait one tick before telling it to play.
     setTimeout(() => audioRef.current?.play(), 0);
+
+    // Log the view — fire-and-forget, doesn't block playback from starting.
+    const supabase = createClient();
+    supabase.rpc("log_media_view", { p_media_id: track.id });
   }
 
   function togglePlayPause() {
